@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Mini-Course Creator</title>
+    <link rel="icon" href="favicon.jpeg" type="image/jpeg">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', Raleway, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            background-color: #fffdfa; /* Subtle light peach background */
+
+        }
+
+        .logo {
+            max-width: 100px;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-family: 'Raleway', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: #1a1a1a;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-family: 'Raleway', sans-serif;
+            font-size: 1.25rem;
+            color: #1a1a1a;
+            margin-bottom: 0.5rem;
+        }
+
+        .brand-icons {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .brand-icons img {
+            width: 25px;
+            height: 25px;
+            object-fit: contain;
+        }
+
+        .main-image {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 2rem;
+        }
+
+        .feature-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0 rem;
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start; /* Ensure items start from the left */
+            background-color: #f9f9f900;
+            padding: 0.2rem;
+            border-radius: 1px;
+            font-size: 13px;
+            /*box-shadow: 0 4px 6px rgba(0,0,0,0.1);*/
+            text-align: left; /* Align text to the left */
+        }
+
+        .feature-item img {
+            width: 22px;
+            height: 22px;
+            margin-right: 1rem;
+            flex-shrink: 0; /* Prevent icon from shrinking */
+        }
+
+        .feature-item p {
+            flex-grow: 1; /* Allow text to take remaining space */
+        }
+
+
+        .waitlist-button {
+            font-family: 'Raleway', sans-serif;
+            background-color: #1FBD53;
+            color: black;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 1000;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .waitlist-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .fomo-container {
+            background-color: #f4f4f4;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+        }
+
+        .exclusive-offers {
+            background-color: rgba(31, 189, 83, 0.1); /* Changed to light green */
+            border: 1px solid rgba(31, 189, 83, 0.3); /* Changed to light green */
+            border-radius: 8px;
+            padding: 0.75rem;
+            max-width: 500px;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .exclusive-offers h3 {
+            color: #1a1a1a;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .offer-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+        }
+
+        .offer-item {
+            background-color: white;
+            border-radius: 6px;
+            padding: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .offer-item .badge {
+            font-weight: 700;
+            color: #1FBD53;
+            margin-bottom: 0.25rem;
+            font-size: 0.7rem;
+        }
+
+        .offer-item .description {
+            font-size: 0.65rem;
+            color: #666;
+        }
+
+        .exclusive-offers .countdown {
+            margin-bottom: 1rem;
+            font-size: 0.6rem;
+            color: #888;
+            font-style: italic;
+        }
+
+        .highlight {
+        position: relative; /* Position relative for absolute positioning of the SVG */
+        display: inline-block; /* Make the span an inline-block to allow padding */
+        padding: 0.2rem 0.4rem; /* Add some padding around the text */
+        color: #1a1a1a; /* Text color */
+    }
+
+    .highlight::before {
+        content: ""; /* Create a pseudo-element */
+        position: absolute; /* Position it absolutely */
+        top: 0; /* Align to the top */
+        left: -0.5rem; /* Align to the left */
+        right: -0.0rem; /* Stretch to the right */
+        bottom: 0; /* Stretch to the bottom */
+        background-image: url('highlight.svg'); /* Use the SVG as a background */
+        background-size: cover; /* Cover the entire span */
+        z-index: -1; /* Place it behind the text */
+    }
+
+        @media (min-width: 601px) {
+            body {
+                height: 100vh; /* Set height to fill the viewport */
+                display: flex; /* Use flexbox for centering */
+                justify-content: center; /* Center items horizontally */
+                align-items: center; /* Center items vertically */
+            }
+
+            h1 {
+               margin-bottom: 2rem;
+            }
+
+            .desktop-container {
+                /* Add this to center the container */
+                display: flex;
+                justify-content: center; /* Center content horizontally */
+                align-items: center; /* Center content vertically */
+                height: 100%; /* Ensure it takes full height */
+            }
+
+            .brand-icons {
+                display: flex;
+                justify-content: left;
+                gap: 0.5rem;
+                margin-bottom: 2rem;
+            }
+
+            .left-side {
+                width: 50%; /* Ensure equal width */
+                max-width: 50%;
+                padding-right: 2rem;
+            }
+
+            .right-side {
+                width: 60%; /* Ensure equal width */
+                max-width: 60%; /* Prevent overflow */
+            }
+
+            .left-side {
+                text-align: left;
+                padding-right: 1rem;
+            }
+
+            .right-side {
+        width: 60%; /* Ensure equal width */
+        max-width: 60%; /* Prevent overflow */
+        display: flex;
+        flex-direction: column; /* Stack items vertically */
+        align-items: center; /* Center items horizontally */
+    }
+
+    .text-below {
+        margin-top: 1rem; /* Add space between the image and the text */
+        text-align: center; /* Center the text */
+    }
+
+            .main-image {
+                max-width: 100%;
+                height: auto;
+            }
+
+            .mobile-only {
+                display: none;
+            }
+
+            .exclusive-offers {
+                padding: 0.5rem;
+                max-width: 80%;
+            }
+
+            .feature-item {
+                flex-direction: row; /* Explicitly set to row */
+                align-items: left; /* Center items vertically */
+                text-align: left; /* Keep text left-aligned */
+                margin-top: 0.3rem;
+                margin-bottom: 0.3rem;
+
+            }
+
+            .feature-item img {
+                margin-right: 1rem; /* Restore right margin */
+                margin-bottom: 0; /* Remove bottom margin */
+            }
+
+            .feature-container {
+                max-width: 80%; /* Set max-width to 90% for better mobile layout */
+            }
+
+            .waitlist-button {
+                margin-top: 0rem;
+                margin-bottom: 1rem;
+
+            }
+
+            
+        }
+
+        @media (max-width: 600px) {
+            .desktop-only {
+                display: none;
+            }
+
+            body {
+                padding: 1rem; /* Remove padding */
+                height: 100vh; /* Set height to fill the viewport */
+                display: flex; /* Use flexbox for centering */
+                flex-direction: column; /* Stack items vertically */
+                justify-content: center; /* Center items vertically */
+                align-items: center; /* Center items horizontally */
+        
+            }
+
+            h1 {
+                font-size: 30px;
+            }
+
+            h2 {
+                font-size: 17px;
+            }
+
+            .waitlist-button {
+                margin-top: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .brand-icons {
+                margin-bottom: 1rem;
+            }
+
+            .main-image {
+                margin-bottom: 1.5rem;
+                max-width: 90%;
+            }
+
+            .feature-item {
+                flex-direction: row; /* Explicitly set to row */
+                align-items: center; /* Center items vertically */
+                text-align: left; /* Keep text left-aligned */
+                margin-bottom: 0.3rem;
+            }
+
+            .feature-item img {
+                margin-right: 1rem; /* Restore right margin */
+                margin-bottom: 0; /* Remove bottom margin */
+            }
+
+            .feature-container {
+                max-width: 80%; /* Set max-width to 90% for better mobile layout */
+                margin: 0 auto; /* Center the container */
+            }
+
+            .exclusive-offers {
+                padding: 0.5rem;
+                margin-top: 0.5rem;
+                max-width: 100%;
+                margin: 0 auto;
+            }
+
+            .offer-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.25rem;
+            }
+
+            .offer-item {
+                padding: 0.75rem;
+            }
+
+            .offer-item .badge {
+                font-size: 0.7rem;
+            }
+
+            .offer-item .description {
+                font-size: 0.7rem;
+            }
+
+            .exclusive-offers .countdown {
+                font-size: 0.7rem;
+                margin-top: 0.5rem;
+            }
+
+            .exclusive-offers h3 {
+                font-size: 1 rem;
+                margin-bottom: 0.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="desktop-container">
+        <div class="left-side">
+            <img src="logo.jpeg" alt="Logo" class="logo">
+            <h1>Move your <span class="highlight">newsletters</span> to WhatsApp for higher <span class="highlight">engagement</span></h1>
+            
+        
+
+        <div class="mobile-only">
+            <h2>Convert email content into WhatsApp messages in minutes.</h2>
+            <img src="main.png" alt="AI Mini-Course Creator" class="main-image">
+        </div>
+
+        <div class="feature-container">
+            <div class="feature-item">
+                <img src="1.webp" alt="Feature 1 Icon">
+                <p>Easily import and <b>convert</b> email newsletters to WhatsApp-<b>optimized content</b>.</p>
+            </div>
+            <div class="feature-item">
+                <img src="2.webp" alt="Feature 2 Icon">
+                <p>Schedule and automate messages for <b>maximum reach and impact</b>.</p>
+            </div>
+            <div class="feature-item">
+                <img src="3.webp" alt="Feature 3 Icon">
+                <p><b>Engage</b> customers <b>instantly</b> with personalized, interactive WhatsApp messages.</p>
+            </div>
+        </div>
+    
+        <button class="waitlist-button" onclick="window.location.href='https://tally.so/r/nGboO2';">Secure Your Spot on the Waitlist</button>
+    
+        <div class="exclusive-offers">
+            <div class="countdown">
+                ⏳ Limited spots available!
+            </div>
+            <div class="offer-grid">
+                <div class="offer-item">
+                    <div class="badge">First 100</div>
+                    <div class="description"><b>Free</b> Lifetime Pro</div>
+                </div>
+                <div class="offer-item">
+                    <div class="badge">Next 1000</div>
+                    <div class="description">50% Off Pro</div>
+                </div>
+                <div class="offer-item">
+                    <div class="badge">Early Access</div>
+                    <div class="description">Free Gift</div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+   
+        
+    <div class="right-side desktop-only">
+        <img src="main.png" alt="AI Mini-Course Creator" class="main-image">
+        <h2 class="text-below">Convert email content into WhatsApp messages in minutes.</h2>
+    </div>
+</body>
+</html>
